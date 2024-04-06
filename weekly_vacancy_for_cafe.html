@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>空席確認</title>
+    <!-- Tailwind CSS CDN (for quick demo purposes) -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+<div class="bg-white p-8 rounded shadow-md w-full md:w-3/4 lg:w-2/3">
+    <h2 class="text-2xl font-semibold mb-2">空席確認</h2>
+
+    <div class="flex justify-between mb-2">
+        <a href="weekly_vacancy/" class="text-blue-500 hover:underline">前の週</a>
+        <a href="weekly_vacancy/" class="text-blue-500 hover:underline">次の週</a>
+    </div>
+
+    <div class="grid grid-cols-8 gap-1">
+            <!-- Headers -->
+        <div class="text-center font-semibold h-8"></div>
+        %for day in this_week:
+            <div class="text-center font-semibold h-8">{{day}}</div>
+        %end
+
+        <div class="text-center font-semibold h-8"></div>
+        % for d in day_of_week:
+            <div class="text-center font-semibold h-8">{{d}}</div>
+        %end
+
+            %for hour in hours:
+                <div class="text-center font-semibold h-8">{{hour}}:00 </div>
+                    %dict = dict_list[hour - 10]
+                        %for date, reserved_seats in dict.items():
+                            %if reserved_seats >= 6:
+                                <div class="border p-0 text-center bg-gray-100 h-8">
+                                    <span class="block mt-1 text-red-500">空席なし</span>
+                                </div>
+                            %else:
+                                <a href="/reserve_for_cafe/{{date}}/{{hour}}">
+                                    <div class="border p-0 text-center bg-gray-100 h-8">
+                                        <span class="block mt-1 text-green-500">残り{{6 - reserved_seats}}席</span>
+                                    </div>
+                                </a>
+                            %end
+
+                            %end
+                        %end
+            %end
+
+</div>
+    <div class="flex justify-between mb-2">
+        <button type="button" class="text-blue-500 hover:underline" onclick= "history.back()">戻る</button>
+    </div>
+
+</div>
+</body>
+</html>

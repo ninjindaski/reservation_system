@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約照会</title>
+    <!-- Tailwind CSS CDN (for quick demo purposes) -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+<div class="bg-white p-8 rounded shadow-md w-full md:w-1/2 lg:w-1/3 text-center">
+    <h2 class="text-2xl font-semibold mb-6">予約照会</h2>
+
+    <!-- Response Display -->
+    <!--「〇月〇日　〇時　○○様 〇名様　〇時間」と表示-->
+    %if len(inquired_reservation) > 0:
+        <div>
+            <p class="text-gray-700">{{inquired_reservation[2][5:7]}}月{{inquired_reservation[2][8:10]}}日　{{inquired_reservation[3]}}時　{{inquired_reservation[1]}}様 　{{inquired_reservation[4]}}名様　{{inquired_reservation[5]}}時間</p>
+        </div>
+    %else:
+        <div>
+            <p class="text-gray-700">テイクアウト：{{inquired_all_takeout_info[1]}}月{{inquired_all_takeout_info[2]}}日　{{inquired_all_takeout_info[3]}}時{{inquired_all_takeout_info[4]}}分 　備考：{{inquired_all_takeout_info[5]}}</p>
+        </div>
+    %end
+
+    <br>
+    <!-- 事前注文-->
+    %if len(inquired_preorders) > 0:
+        <div>
+            %for menu in inquired_preorders:
+                <p class="text-gray-700">{{menu[1]}}  {{menu[2]}}個</p>
+            %end
+        </div>
+    %elif len(inquired_takeout_order) > 0:
+        <div>
+            %for menu in inquired_takeout_order:
+                <p class="text-gray-700">{{menu[1]}}  {{menu[2]}}個</p>
+            %end
+        </div>
+    %else:
+        <div>
+            <p class="text-gray-700">事前注文なし</p>
+        </div>
+    %end
+
+    <br>
+
+    <form action="menu_cafe/{{reservation_code}}" method = 'POST'>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none">来店済みにする</button>
+    </form>
+
+
+    <div class="flex justify-between mb-2">
+        <button type="button" class="text-blue-500 hover:underline" onclick= "history.back()">戻る</button>
+    </div>
+</div>
+
+</body>
+</html>

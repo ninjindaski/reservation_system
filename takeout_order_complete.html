@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>テイクアウト注文完了</title>
+</head>
+<body>
+    <div class="bg-white p-8 rounded shadow-md w-full md:w-1/2 lg:w-1/3 text-center">
+        <p class="text-1xl font-semibold mb-6">ありがとうございます</p>
+        <h2 class="text-2xl font-semibold mb-6">テイクアウトのご注文を承りました！</h2>
+
+        <div class="mb-4 flex items-center">
+            <span class="w-40 mr-4 text-gray-700">受け取り時間</span>
+            <span class="text-gray-900">{{month}}月{{day}}日{{hour}}時{{minite}}分</span>
+        </div>
+
+
+        %for order in preorder_items:
+    <div class="mb-4 flex items-center">
+        <span class="text-gray-900 items-center">{{order[0]}}　</span>
+        <span class ="text-gray-900 items-center" > {{order[1]}}　個 </span >
+    </div>
+
+    %end
+
+    <div class="mb-4 flex items-center">
+    <span class="w-40 mr-4 text-gray-700">備考</span>
+    %if len(note) == 0:
+        <span class="text-gray-900">なし</span>
+    %else:
+        <span class="text-gray-900">{{note}}</span>
+    %end
+    </div>
+
+    <a href="/" >ログイン画面に戻る</a>
+    </div>
+</body>
+</html>
